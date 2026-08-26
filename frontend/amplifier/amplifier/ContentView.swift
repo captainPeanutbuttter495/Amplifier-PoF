@@ -8,8 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isSignedIn = false
+
     var body: some View {
-        SignInView()
+        if isSignedIn {
+            RootTabView()
+        } else {
+            SignInView {
+                withAnimation { isSignedIn = true }
+            }
+        }
     }
 }
 

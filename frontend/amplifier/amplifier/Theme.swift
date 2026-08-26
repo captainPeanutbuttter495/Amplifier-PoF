@@ -38,3 +38,17 @@ enum VIP {
     // Google brand blue (logo glyph)
     static let googleBlue = Color(hex: 0x4285F4)
 }
+
+// Extended tokens used by the Home screen
+extension VIP {
+    static let cyan600 = Color(hex: 0x1F8F8A)
+    static let cyan700 = Color(hex: 0x176D69)
+    static let wordmark = Color(hex: 0xB33A10)      // eyebrow ink on light surface
+    static let logoYellow = Color(hex: 0xF0CF60)
+    static let pendingInk = Color(hex: 0x7A5E10)
+    static let rejectedInk = Color(hex: 0xC33107)
+    static let orange400 = Color(hex: 0xFF3D00)
+    static let sky300 = Color(hex: 0xC7D9F1)
+    static let wisteriaInk = Color(hex: 0x5B3EA6)
+    static let wisteria400 = Color(hex: 0xB79BF2)
+}

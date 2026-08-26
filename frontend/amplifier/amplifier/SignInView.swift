@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct SignInView: View {
+    /// Called when any auth option succeeds. Real Auth0 flows come later;
+    /// for the PoC every button continues straight to the app.
+    var onContinue: () -> Void = {}
+
     var body: some View {
         VStack(spacing: 0) {
             // Hero block — vertically centered in the remaining space
@@ -36,7 +40,7 @@ struct SignInView: View {
             // Auth actions pinned to the bottom
             VStack(spacing: 10) {
                 AuthButton(style: .filled(background: VIP.parchment, foreground: VIP.onyx)) {
-                    // TODO: Sign in with Apple via Auth0
+                    onContinue()   // TODO: Sign in with Apple via Auth0
                 } label: {
                     Image(systemName: "apple.logo")
                         .font(.system(size: 17, weight: .medium))
@@ -44,7 +48,7 @@ struct SignInView: View {
                 }
 
                 AuthButton(style: .outlined) {
-                    // TODO: Sign in with Google via Auth0
+                    onContinue()   // TODO: Sign in with Google via Auth0
                 } label: {
                     Text("G")
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
@@ -53,7 +57,7 @@ struct SignInView: View {
                 }
 
                 AuthButton(style: .filled(background: VIP.cta, foreground: .white)) {
-                    // TODO: Sign in with email via Auth0
+                    onContinue()   // TODO: Sign in with email via Auth0
                 } label: {
                     Image(systemName: "envelope")
                         .font(.system(size: 15, weight: .semibold))
