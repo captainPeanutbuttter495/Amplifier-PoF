@@ -12,7 +12,9 @@ struct ContentView: View {
 
     var body: some View {
         if isSignedIn {
-            RootTabView()
+            RootTabView {
+                withAnimation { isSignedIn = false }
+            }
         } else {
             SignInView {
                 withAnimation { isSignedIn = true }

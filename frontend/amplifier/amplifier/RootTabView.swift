@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct RootTabView: View {
+    var onSignOut: () -> Void = {}
+
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
@@ -20,7 +22,7 @@ struct RootTabView: View {
                 RewardsView()
             }
             Tab("Profile", systemImage: "person.crop.circle") {
-                PlaceholderScreen(title: "Profile")
+                ProfileView(onSignOut: onSignOut)
             }
         }
         .tint(VIP.cyan700)
@@ -28,22 +30,6 @@ struct RootTabView: View {
     }
 }
 
-private struct PlaceholderScreen: View {
-    let title: String
-
-    var body: some View {
-        VStack(spacing: 8) {
-            Text(title)
-                .font(.system(size: 34, weight: .bold))
-                .foregroundStyle(VIP.onyx)
-            Text("Coming soon")
-                .font(.system(size: 16))
-                .foregroundStyle(VIP.onyx.opacity(0.5))
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(VIP.parchment)
-    }
-}
 
 #Preview {
     RootTabView()
