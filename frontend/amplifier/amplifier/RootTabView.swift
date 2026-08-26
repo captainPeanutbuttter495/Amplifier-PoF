@@ -17,7 +17,7 @@ struct RootTabView: View {
                 }
             }
             Tab("Rewards", systemImage: "gift") {
-                PlaceholderScreen(title: "Rewards")
+                RewardsView()
             }
             Tab("Profile", systemImage: "person.crop.circle") {
                 PlaceholderScreen(title: "Profile")
