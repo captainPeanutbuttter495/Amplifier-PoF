@@ -117,15 +117,8 @@ struct RewardsView: View {
                 .tracking(-0.34)
                 .foregroundStyle(VIP.onyx)
             Spacer()
-            (
-                Text(balance.formatted())
-                    .font(.system(size: 18, weight: .bold, design: .monospaced))
-                    .foregroundStyle(VIP.cyan600)
-                + Text(" pts to spend")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(VIP.onyx.opacity(0.5))
-            )
-            .padding(.bottom, 4)
+            Text("\(Text(balance.formatted()).font(.system(size: 18, weight: .bold, design: .monospaced)).foregroundStyle(VIP.cyan600))\(Text(" pts to spend").font(.system(size: 12, weight: .semibold)).foregroundStyle(VIP.onyx.opacity(0.5)))")
+                .padding(.bottom, 4)
         }
         .padding(.bottom, 4)
     }

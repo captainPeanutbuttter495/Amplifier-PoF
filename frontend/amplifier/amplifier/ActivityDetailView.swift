@@ -144,7 +144,7 @@ struct ActivityDetailView: View {
                 .font(.system(size: 15, weight: .semibold))
                 .foregroundStyle(ink)
                 .padding(.top, 1)
-            (Text(lead).bold().foregroundStyle(ink) + Text(text).foregroundStyle(VIP.onyx))
+            Text("\(Text(lead).bold().foregroundStyle(ink))\(Text(text).foregroundStyle(VIP.onyx))")
                 .font(.system(size: 13.5))
                 .lineSpacing(3)
         }
