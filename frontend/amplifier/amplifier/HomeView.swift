@@ -66,6 +66,8 @@ struct HomeView: View {
             .padding(.top, 8)
         }
         .background(VIP.parchment)
+        .navigationTitle("Home")
+        .toolbar(.hidden, for: .navigationBar)
     }
 
     private var header: some View {
@@ -225,8 +227,8 @@ private struct ActivityCard: View {
     let activity: Activity
 
     var body: some View {
-        Button {
-            // TODO: push Activity Detail screen
+        NavigationLink {
+            ActivityDetailView(activity: activity)
         } label: {
             HStack(alignment: .top, spacing: 14) {
                 Image(systemName: activity.symbol)
@@ -285,5 +287,7 @@ private struct ActivityCard: View {
 }
 
 #Preview {
-    HomeView()
+    NavigationStack {
+        HomeView()
+    }
 }

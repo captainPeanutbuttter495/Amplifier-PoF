@@ -12,7 +12,9 @@ struct RootTabView: View {
     var body: some View {
         TabView {
             Tab("Home", systemImage: "house.fill") {
-                HomeView()
+                NavigationStack {
+                    HomeView()
+                }
             }
             Tab("Rewards", systemImage: "gift") {
                 PlaceholderScreen(title: "Rewards")
