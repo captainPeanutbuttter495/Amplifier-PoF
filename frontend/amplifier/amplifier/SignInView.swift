@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct SignInView: View {
-    /// Launches Auth0 Universal Login. Every button opens the same hosted
-    /// login page, where Auth0 presents the Apple/Google/email options.
+    /// Launches Auth0 Universal Login, where Auth0 presents the
+    /// Apple/Google/email options on its hosted page.
     var onContinue: () -> Void = {}
 
     var body: some View {
@@ -37,37 +37,20 @@ struct SignInView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-            // Auth actions pinned to the bottom
+            // Auth action pinned to the bottom
             VStack(spacing: 10) {
                 AuthButton(style: .filled(background: VIP.parchment, foreground: VIP.onyx)) {
                     onContinue()
                 } label: {
-                    Image(systemName: "apple.logo")
-                        .font(.system(size: 17, weight: .medium))
-                    Text("Continue with Apple")
-                }
-
-                AuthButton(style: .outlined) {
-                    onContinue()
-                } label: {
-                    Text("G")
-                        .font(.system(size: 16, weight: .heavy, design: .rounded))
-                        .foregroundStyle(VIP.googleBlue)
-                    Text("Continue with Google")
-                }
-
-                AuthButton(style: .filled(background: VIP.cta, foreground: .white)) {
-                    onContinue()
-                } label: {
-                    Image(systemName: "envelope")
-                        .font(.system(size: 15, weight: .semibold))
-                    Text("Continue with Email")
+                    Text("Sign In or Create Account")
+                    Image(systemName: "arrow.right")
+                        .font(.system(size: 14, weight: .semibold))
                 }
 
                 HStack(spacing: 6) {
                     Image(systemName: "lock")
                         .font(.system(size: 11))
-                    Text("Secured by Auth0 · No CSUN sign-in needed")
+                    Text("Apple, Google, or email · Secured by Auth0")
                         .font(.system(size: 12))
                 }
                 .foregroundStyle(VIP.lightGrey.opacity(0.5))
@@ -115,7 +98,6 @@ private struct StatBlock: View {
 private struct AuthButton<Label: View>: View {
     enum Style {
         case filled(background: Color, foreground: Color)
-        case outlined
     }
 
     let style: Style
@@ -133,12 +115,6 @@ private struct AuthButton<Label: View>: View {
         .buttonStyle(.plain)
         .foregroundStyle(foreground)
         .background(background)
-        .overlay {
-            if case .outlined = style {
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(VIP.lightGrey.opacity(0.25), lineWidth: 1)
-            }
-        }
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
