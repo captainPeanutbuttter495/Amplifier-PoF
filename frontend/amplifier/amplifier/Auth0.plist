@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ClientId</key>
+	<string>KkUz7XywIdfFZbrgf6lxvsAZ6NzhKZal</string>
+	<key>Domain</key>
+	<string>dev-hy65eoq8zjqxidcn.us.auth0.com</string>
+	<key>CallbackMode</key>
+	<string>custom-scheme</string>
+</dict>
+</plist>

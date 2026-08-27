@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct amplifierApp: App {
+    @StateObject private var auth = AuthenticationService()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(auth)
         }
     }
 }

@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isSignedIn = false
+    @EnvironmentObject var auth: AuthenticationService
 
     var body: some View {
-        if isSignedIn {
+        if auth.isAuthenticated {
             RootTabView {
-                withAnimation { isSignedIn = false }
+                Task { await auth.logout() }
             }
         } else {
             SignInView {
-                withAnimation { isSignedIn = true }
+                Task { await auth.login() }
             }
         }
     }
@@ -25,4 +25,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environmentObject(AuthenticationService())
 }

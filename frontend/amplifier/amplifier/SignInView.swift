@@ -9,8 +9,8 @@
 import SwiftUI
 
 struct SignInView: View {
-    /// Called when any auth option succeeds. Real Auth0 flows come later;
-    /// for the PoC every button continues straight to the app.
+    /// Launches Auth0 Universal Login. Every button opens the same hosted
+    /// login page, where Auth0 presents the Apple/Google/email options.
     var onContinue: () -> Void = {}
 
     var body: some View {
@@ -40,7 +40,7 @@ struct SignInView: View {
             // Auth actions pinned to the bottom
             VStack(spacing: 10) {
                 AuthButton(style: .filled(background: VIP.parchment, foreground: VIP.onyx)) {
-                    onContinue()   // TODO: Sign in with Apple via Auth0
+                    onContinue()
                 } label: {
                     Image(systemName: "apple.logo")
                         .font(.system(size: 17, weight: .medium))
@@ -48,7 +48,7 @@ struct SignInView: View {
                 }
 
                 AuthButton(style: .outlined) {
-                    onContinue()   // TODO: Sign in with Google via Auth0
+                    onContinue()
                 } label: {
                     Text("G")
                         .font(.system(size: 16, weight: .heavy, design: .rounded))
@@ -57,7 +57,7 @@ struct SignInView: View {
                 }
 
                 AuthButton(style: .filled(background: VIP.cta, foreground: .white)) {
-                    onContinue()   // TODO: Sign in with email via Auth0
+                    onContinue()
                 } label: {
                     Image(systemName: "envelope")
                         .font(.system(size: 15, weight: .semibold))
