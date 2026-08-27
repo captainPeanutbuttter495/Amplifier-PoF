@@ -2,7 +2,7 @@
 
 The SwiftUI client for the Amplifier proof of concept. Five screens implementing the core product loop — sign in, browse activities, view activity detail, track points, and redeem rewards — ported from the Amplifier design project (`.dc.html` mockups) using the VIP design-system tokens.
 
-> **PoC status:** this app currently runs entirely on local demo data. There is no networking layer, no Auth0 integration, and no persistence yet — every sign-in button continues straight into the app. A backend (planned in Python, details TBD) will eventually be the source of truth for scores and verification; this client is being built UI-first ahead of it.
+> **PoC status:** authentication is real — sign-in goes through Auth0 Universal Login, tokens live in the Keychain, and the session survives relaunches. Everything else still runs on local demo data: there is no networking layer or persistence yet. A backend (planned in Python, details TBD) will eventually be the source of truth for scores and verification; this client is being built UI-first ahead of it.
 
 ---
 
@@ -13,7 +13,7 @@ The SwiftUI client for the Amplifier proof of concept. Five screens implementing
 | Xcode | 26+ (the project targets iOS 26 APIs) |
 | Deployment target | iOS 26 |
 | UI | SwiftUI, native Liquid Glass tab bar |
-| Dependencies | None — no packages, no CocoaPods |
+| Dependencies | [Auth0.swift](https://github.com/auth0/Auth0.swift) v3 via Swift Package Manager (resolves automatically) |
 
 ## Running
 
@@ -25,6 +25,21 @@ open frontend/amplifier/amplifier.xcodeproj
 
 Select any iOS 26 simulator and press **⌘R**. Every SwiftUI file also has a `#Preview` for iterating on a single screen in the canvas.
 
+### Auth0 configuration
+
+Auth0 works out of the box — `amplifier/Auth0.plist` ships configured against the dev tenant, and its two values (`ClientId`, `Domain`) are public identifiers, not secrets. The flow uses PKCE with a custom-scheme callback, so no client secret exists anywhere in the app; issued tokens are stored only in the Keychain by the SDK's `CredentialsManager`.
+
+To point at a different Auth0 tenant:
+
+1. Create a **Native** application in the Auth0 Dashboard.
+2. Add this to both **Allowed Callback URLs** and **Allowed Logout URLs** (substituting your tenant domain):
+   ```
+   com.dcabahug1.amplifier://YOUR_DOMAIN/ios/com.dcabahug1.amplifier/callback
+   ```
+3. Update `ClientId` and `Domain` in `Auth0.plist`.
+
+Known dev-only shortcuts: Google login rides on Auth0's shared development keys (needs own OAuth credentials for production), "Continue with Apple" is unconfigured in the tenant (email/password and Google work), and the custom-scheme callback should become HTTPS Universal Links before production.
+
 ---
 
 ## Project structure
@@ -33,9 +48,11 @@ All source lives flat in `amplifier/amplifier/`:
 
 | File | Purpose |
 |---|---|
-| `amplifierApp.swift` | `@main` entry point |
-| `ContentView.swift` | Root switch between sign-in and the tab app (`isSignedIn` state) |
-| `SignInView.swift` | Sign-in screen. Auth buttons are stubs — any option calls `onContinue` |
+| `amplifierApp.swift` | `@main` entry point; injects `AuthenticationService` as an environment object |
+| `ContentView.swift` | Root switch between sign-in and the tab app, driven by `auth.isAuthenticated` |
+| `AuthenticationService.swift` | Auth0 Web Auth login/logout, Keychain credential storage, silent session renewal |
+| `Auth0.plist` | Auth0 `ClientId` + `Domain` (public values — safe to commit) |
+| `SignInView.swift` | Sign-in screen. One CTA that opens Auth0 Universal Login (Apple / Google / email live on the hosted page) |
 | `RootTabView.swift` | Native iOS 26 `TabView` (Home / Rewards / Profile) with Liquid Glass and `tabBarMinimizeBehavior(.onScrollDown)` |
 | `HomeView.swift` | Score header + activity feed with filtering and point sorting |
 | `ActivityDetailView.swift` | Per-activity detail; banner and CTA are driven by verification status |
@@ -55,7 +72,7 @@ All source lives flat in `amplifier/amplifier/`:
 
 Planned work to connect this UI to the real system once the backend (Python, TBD) exists:
 
-- Auth0 Universal Login replacing the stubbed sign-in, with Keychain token storage
-- An `APIClient` (`URLSession` + `async/await`) replacing the demo data in `Activity.swift`
+- Register the backend as an API in Auth0 and add `.audience(...)` to the login call, so access tokens are JWTs the backend can verify
+- An `APIClient` (`URLSession` + `async/await`) replacing the demo data in `Activity.swift`, sending `AuthenticationService.accessToken()` as a Bearer header
 - Evidence submission from `ActivityDetailView` posting to the API
 - Server-driven scores, tiers, and reward eligibility — the client never computes points; it only displays what the API returns
