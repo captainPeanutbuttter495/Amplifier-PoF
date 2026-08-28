@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>ClientId</key>
-	<string>KkUz7XywIdfFZbrgf6lxvsAZ6NzhKZal</string>
+	<string>nnMHLPQ1xS3iTD3Fxu2zLTeQPD3t47Dq</string>
 	<key>Domain</key>
-	<string>dev-hy65eoq8zjqxidcn.us.auth0.com</string>
+	<string>dev-pm0v00o6oaewk7y6.us.auth0.com</string>
 	<key>CallbackMode</key>
 	<string>custom-scheme</string>
 </dict>
